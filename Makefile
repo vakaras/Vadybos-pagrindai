@@ -1,10 +1,8 @@
-default: fresh
-
 # Sugeneruoti straipsnį.
-konspektas.pdf:
+main.pdf: *.tex 
 	xelatex main.tex
 	xelatex main.tex
-	mv main.pdf konspektas.pdf
+	xelatex main.tex
 
 fresh: clear konspektas.pdf
 
