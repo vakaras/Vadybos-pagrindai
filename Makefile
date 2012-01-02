@@ -1,15 +1,13 @@
-# Sugeneruoti straipsnį.
-main.pdf: *.tex 
-	xelatex main.tex
-	xelatex main.tex
-	xelatex main.tex
+TEXINPUTS := .:./config:./common:./deps:./content:./examples:
+export TEXINPUTS
 
-fresh: clear konspektas.pdf
+all: config/main.pdf
 
-# Išvalyti šiukšles.
-clean:
-	rm -f *.aux *.log *.xdv *.out *.toc
+%.pdf: %.tex
+	echo ${TEXINPUTS} ${PATH}
+	xelatex -shell-escape -output-directory dist "\input{$*.tex}"
+	bibtex dist/main
+	xelatex -shell-escape -output-directory dist "\input{$*.tex}"
 
-# Ištrinti visus sugeneruotus failus.
-clear: clean
-	rm -f *.pdf
+show:
+	xdg-open dist/main.pdf
